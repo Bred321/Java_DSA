@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Hello_World/Hello_World.iml" filepath="$PROJECT_DIR$/Hello_World/Hello_World.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Java_code.iml" filepath="$PROJECT_DIR$/.idea/Java_code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/list_arrays_for_loops/List_and_Arrays.iml" filepath="$PROJECT_DIR$/list_arrays_for_loops/List_and_Arrays.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data_structures/data_structures.iml" filepath="$PROJECT_DIR$/data_structures/data_structures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/inputs/inputs.iml" filepath="$PROJECT_DIR$/inputs/inputs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/operators_conditionals/operators_conditionals.iml" filepath="$PROJECT_DIR$/operators_conditionals/operators_conditionals.iml" />
+    </modules>
+  </component>
+</project>
