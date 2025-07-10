@@ -11,5 +11,8 @@ public class classes {
 
         tim.setAge(7);
         System.out.println("Tim's age is now: " + tim.getAge());
+
+        Cat joe = new Cat("Joe", 7);
+        joe.eat(2);
     }
 }
