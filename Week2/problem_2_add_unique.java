@@ -16,6 +16,8 @@ public class problem_2_add_unique {
     public static int[] sol_1_without_sorting(int[] nums){
         int[] unique = new int[nums.length];
         int index = 0;
+        // Loop through each number in the input array
+        // and check if it is already in the unique (output) array
         for(int i: nums){
             boolean found = false;
             for(int j: unique){
