@@ -1,3 +1,10 @@
+// Describe an algorithm that prints out all the unique elements in an array. What is the complexity of your algorithm? (Consider two different approaches: without sorting and with sorting)
+
+// Example:
+
+// Array = [6, 8, 10, 11, 6, 10] => print out [6, 8, 10, 11] (you can print the values in any order)
+
+// Note: some students proposed using a set ADT to solve this problem. However, the operations on a set are not basic operations.
 package Week2;
 
 public class problem_2_add_unique {
