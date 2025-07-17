@@ -1,4 +1,4 @@
-package ADT;
+package Week_3.ADT;
 // Singly Linked List-based implementation of queue
 public class LinkedListQueue<T> {
   // this class is used as a container of data 

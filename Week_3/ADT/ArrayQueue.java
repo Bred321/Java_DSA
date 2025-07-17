@@ -1,5 +1,5 @@
 // array-based implementation of queue
-package ADT;
+package Week_3.ADT;
 
 public class ArrayQueue<T> {
   private int size;
