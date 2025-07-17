@@ -13,6 +13,7 @@ public class SLL {
         if(loop(n1)){
             System.out.println("Loop detected");
             run(10, n1);
+            breakLoop(n1);
         } else {
             System.out.print("No loop detected\n");
         }
@@ -52,10 +53,52 @@ public class SLL {
 
         return true;
     }
+
+    // Break loop to remove the loop
+    static void breakLoop(Node start){
+        //1. Use Floyd algorithm to find the node where tortoise and hare met
+        Node tortoise = start;
+        Node hare = start;
+
+        do {
+            hare = hare.next;
+            hare = hare.next;
+            tortoise = tortoise.next;
+            // Take into account the circular linked list
+        } while (tortoise != hare);
+
+        //2. Advance tortoise only to count how many nodes before reaching hare
+        int count = 0;
+        do {
+            tortoise = tortoise.next;
+            count++;
+        } while(tortoise != hare);
+        System.out.println(count);
+
+        //3. Position hare and tortoise to the start of the linked list
+        hare = tortoise = hare;
+
+        //4. advance hare by <count> nodes obtained from step 2 to position hare
+        // at the correct node
+        while(count > 0){
+            hare = hare.next;
+            count--;
+        }
+
+        //5. Advances both hare and tortoise at the same speed until 
+        // hare.next == tortoise.next 
+        while(tortoise.next != hare.next){
+            tortoise = tortoise.next;
+            hare = hare.next;
+        }
+        //6. Remove the loop by setting fast.next to null
+        hare.next = null;
+    }
 }
 
 
 class Node {
+    // Default parameters value
     int data = 0;
     Node next = null;
 
