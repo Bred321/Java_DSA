@@ -1,4 +1,4 @@
-package objects;
+package Tutorial.objects;
 import java.util.Scanner;
 
 public class object {

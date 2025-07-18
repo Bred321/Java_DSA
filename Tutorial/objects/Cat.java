@@ -1,4 +1,4 @@
-package objects;
+package Tutorial.objects;
 
 public class Cat extends Dog{
     private int food;
