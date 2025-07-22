@@ -1,0 +1,26 @@
+1) ___ will be I
+
+2) Time complexity of the current algorithm: O(n)
+
+3) Proposed algorithm with O(log(n)) since we half the processed array by comparing the middle element with the inserted value.
+The program now only processes half of the array instead of going through the whole N length
+
+int position(int[] A, X){
+    ans = a.Length
+    start = 0
+    end = N
+    
+    while(start <= end){
+        int mid = start + end / 2
+
+        if(X <= A[mid]){
+            ans = mid
+            end = mid - 1
+        } else {
+            start = mid + 1
+        }
+
+    }
+
+    return ans
+}

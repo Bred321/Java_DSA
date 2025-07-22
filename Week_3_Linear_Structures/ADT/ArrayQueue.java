@@ -1,5 +1,5 @@
 // array-based implementation of queue
-package Week_3.ADT;
+package Week_3_Linear_Structures.ADT;
 
 public class ArrayQueue<T> {
   private int size;
@@ -70,6 +70,7 @@ public class ArrayQueue<T> {
     }
     // dequeue until empty()
     // should get 6 to 9, then 1 to 5
+    System.out.println("Dequeue until empty: ");
     while (!queue.isEmpty()) {
       System.out.println(queue.peekFront());
       queue.deQueue();

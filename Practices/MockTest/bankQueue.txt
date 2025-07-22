@@ -1,0 +1,19 @@
+Use arrays to implement a priority queue for serving customers at a bank. Each customer has an id (integer), name (String), and type (can be "Silver", "Gold", and "Diamond"). When a customer arrives, the system calls the enqueue() method to add the customer to the waiting line. The dequeue() method returns the customer that will be served (that customer is also removed from the waiting line, too). The customers are served in first-in, first-out orders. However, higher-priority customers are always served before lower-priority customers. The highest priority type is "Diamond", then"Gold", and finally "Silver".
+
+Create a class <Your first name>BankQueue. Except for the constructor, your BankQueue class must support the following two public operations (feel free to add additional private operations as needed - but their scope has to be private). Furthermore, let's call N the number of elements in the BankQueue ADT. What are the big-O of your two methods regarding N in the worst case? You must insert a comment before the method signature to describe the method's big-O. A sample template is given below:
+
+// method1 complexity = O(N * lgN)
+public void method1() {
+  .........
+}
+int enQueue(Customer customer): enqueue a new customer. Return the position of the newly enqueued customer in the waiting line. The first customer has a position of zero.
+enQueue(new Customer(123, "Alice", "Gold")) => return 0.
+enQueue(new Customer(456, "Bob", "Silver")) => return 1.
+enQueue(new Customer(789, "Carol", "Diamond")) => return 0.
+When a customer arrives first, but that customer will be served after another customer who arrives later, the first customer becomes unhappy. Implement a method countUnhappy() that returns the number of unhappy customers at the time the method countUnhappy() is called.
+enQueue(new Customer(123, "Alice", "Gold")) // now, if you call countUnhappy(), it returns 0
+enQueue(new Customer(456, "Bob", "Silver")) // now, if you call countUnhappy(), it also returns 0
+enQueue(new Customer(789, "Carol", "Diamond")) // Carol bypasses Alice and Bob, making them both unhappy, if you call countUnhappy(), it now returns 2
+Create a <your first name>BankQueue object and use it in the main method (client code). Your client code must call all the above 2 public methods one or more times.
+
+Your code for this problem must be stored in a single file <your first name>BankQueue.java.

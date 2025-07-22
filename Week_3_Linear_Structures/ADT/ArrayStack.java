@@ -1,4 +1,4 @@
-package Week_3.ADT;
+package Week_3_Linear_Structures.ADT;
 // Array-based implementation of stack
 public class ArrayStack<T> {
   private int size;

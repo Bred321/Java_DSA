@@ -1,6 +1,6 @@
-package Week_3.ADT;
+package Week_3_Linear_Structures.exes;
 
-public class SLL {
+public class P1_SLL {
     public static void main (String[] args){
         Node n5 = new Node(5, null);
         Node n4 = new Node(4, n5);

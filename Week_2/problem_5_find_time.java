@@ -2,6 +2,7 @@
 //How many days it will take your application to run for 1,000,000 users?
 
 // Answer: T(n) = 100 (msec) * (1,000,000 / 1,000)^3 = 100 * 1,000,000 = 100,000,000 msec
+package Week_2;
 import java.lang.Math;
 public class problem_5_find_time {
     public static void main(String[] args){
