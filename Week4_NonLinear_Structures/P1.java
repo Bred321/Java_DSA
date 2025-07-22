@@ -18,12 +18,15 @@ public class P1 {
 
         System.out.println("\nIn-order traversal of the tree: ");
         traverseInOrder(n7); // Output: 1 3 5 7 9 11 13
+
+        System.out.println("\nBreadth First traversal of the tree: ");
+        traverseBreadthFirst(n7); // Output: 1 3 5 7 9 11 13
     }
 
     static void traversePreOrder(TreeNode node){
         if(node != null){
             System.out.print(" " + node.data);
-            traversePreOrder(node. left);
+            traversePreOrder(node.left);
             traversePreOrder(node.right);
         }
     }
@@ -41,6 +44,19 @@ public class P1 {
             traverseInOrder(node.left);
             System.out.print(" " + node.data);
             traverseInOrder(node.right);
+        }
+    }
+
+    static void traverseBreadthFirst(TreeNode root){
+        ArrayQueue<TreeNode> queue = new ArrayQueue<>();
+        if(root != null) queue.enQueue(root);
+
+        while(!queue.isEmpty()){
+            TreeNode node = queue.peekFront();
+            queue.deQueue();
+            System.out.print(" " + node.data);
+            if(node.left != null) queue.enQueue(node.left);
+            if(node.right != null) queue.enQueue(node.right);
         }
     }
 }
