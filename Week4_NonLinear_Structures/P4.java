@@ -1,9 +1,9 @@
 package Week4_NonLinear_Structures;
 
-public class P1 {
-    TreeNode root;
+public class P4 {
+    static TreeNode root;
 
-    public P1(){
+    public P4(){
         // Initialize the tree structure
         TreeNode n1 = new TreeNode(1);
         TreeNode n5 = new TreeNode(5);
@@ -13,57 +13,48 @@ public class P1 {
         TreeNode n11 = new TreeNode(11, n9, n13);
         root = new TreeNode(7, n3, n11);
     }
+
     public static void main(String[] args){
-        P1 p1 = new P1();
-
-        System.out.println("Pre-order traversal of the tree: ");
-        traversePreOrder(p1.root); // Output: 7 3 1 5 11 9 13
-
-        System.out.println("\nPost-order traversal of the tree: ");
-        traversePostOrder(p1.root); // Output: 1 5 3 9 13 11 7
-
-        System.out.println("\nIn-order traversal of the tree: ");
-        traverseInOrder(p1.root); // Output: 1 3 5 7 9 11 13
-
+        P4 p4 = new P4();
+        int x = 6;
         System.out.println("\nBreadth First traversal of the tree: ");
-        traverseBreadthFirst(p1.root); // Output: 1 3 5 7 9 11 13
+        if(searchMinLargerNode(x) != null){
+            TreeNode resultNode = searchMinLargerNode(x);
+            System.out.println("Node value: " + resultNode.data);
+        } else {
+            System.out.println("Cannot find a node larger than " + x);
+        } // Output: 1 3 5 7 9 11 13
     }
 
-    static void traversePreOrder(TreeNode node){
-        if(node != null){
-            System.out.print(" " + node.data);
-            traversePreOrder(node.left);
-            traversePreOrder(node.right);
-        }
-    }
-
-    static void traversePostOrder(TreeNode node){
-        if(node != null){
-            traversePostOrder(node.left);
-            traversePostOrder(node.right);
-            System.out.print(" " + node.data);
-        }
-    }
-
-    static void traverseInOrder(TreeNode node){
-        if(node != null){
-            traverseInOrder(node.left);
-            System.out.print(" " + node.data);
-            traverseInOrder(node.right);
-        }
-    }
-
-    static void traverseBreadthFirst(TreeNode root){
+    static TreeNode searchMinLargerNode(int x){
         ArrayQueue<TreeNode> queue = new ArrayQueue<>();
-        if(root != null) queue.enQueue(root);
+        TreeNode minNode = new TreeNode(0);
+        float minDiff = Float.POSITIVE_INFINITY;
+
+        if(root != null) {
+            queue.enQueue(root);
+            if(root.data - x > 0 && root.data - x < minDiff){
+                minDiff = root.data - x;
+                minNode = root;
+            }
+        } 
 
         while(!queue.isEmpty()){
             TreeNode node = queue.peekFront();
             queue.deQueue();
-            System.out.print(" " + node.data);
-            if(node.left != null) queue.enQueue(node.left);
-            if(node.right != null) queue.enQueue(node.right);
+            if(node.left != null) {
+                queue.enQueue(node.left);
+            }
+            if(node.right != null) {
+                queue.enQueue(node.right);
+            } 
+            if(node.data - x > 0 && node.data - x < minDiff){
+                minDiff = node.data - x;
+                minNode = node;
+            }
         }
+
+        return minNode;
     }
 }
 
@@ -129,4 +120,3 @@ class ArrayQueue<T> {
       return this.isEmpty() ? null : this.items[this.front];
    }
 }
-

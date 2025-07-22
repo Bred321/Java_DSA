@@ -1,17 +1,23 @@
 package Week4_NonLinear_Structures;
 
 public class P2 {
-    public static void main(String[] args){
+    TreeNode root;
+
+    public P2(){
+        // Initialize the tree structure
         TreeNode n1 = new TreeNode(1);
         TreeNode n5 = new TreeNode(5);
         TreeNode n3 = new TreeNode(3, n1, n5);
         TreeNode n9 = new TreeNode(9);
         TreeNode n13 = new TreeNode(13);
         TreeNode n11 = new TreeNode(11, n9, n13);
-        TreeNode root = new TreeNode(7, n3, n11);
+        root = new TreeNode(7, n3, n11);
+    }
+    public static void main(String[] args){
+        P2 p2 = new P2();
 
         System.out.println("\nBreadth First traversal of the tree: ");
-        if(isBinarySearchTree(root)){
+        if(isBinarySearchTree(p2.root)){
             System.out.println("The tree is a Binary Search Tree.");
         } else {
             System.out.println("The tree is NOT a Binary Search Tree.");
