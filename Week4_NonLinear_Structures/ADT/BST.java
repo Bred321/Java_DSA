@@ -4,6 +4,10 @@ package Week4_NonLinear_Structures.ADT;
 public class BST {
     BSTNode root;
 
+    public BSTNode(){
+        root = null;
+    }
+
     // Insert a node into the BST
     public boolean insert(int value) {
         if (root == null) root = new BSTNode(value);
