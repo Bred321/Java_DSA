@@ -71,10 +71,11 @@ class TreeNode{
     int data;
     TreeNode left = null;
     TreeNode right = null;
+    TreeNode parent = null;
 
     public TreeNode(int data, TreeNode left, TreeNode right){
         this.data = data;
-        this.left = left;
+        this.parent = this.right = this.left = null;
         this.right = right;
     }
 
