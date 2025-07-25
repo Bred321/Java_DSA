@@ -46,6 +46,7 @@ public class P3 {
     public int findDistances(BTNode node1, BTNode node2){
         int level1 = findLevel(node1);
         int level2 = findLevel(node2);
+        return 0;
     }
 }
 
