@@ -43,12 +43,13 @@ public class P3 {
         return -1; // Node not found
     }
 
-    public int findDistances(BTNode node1, BTNode node2){
-        int level1 = findLevel(node1);
-        int level2 = findLevel(node2);
-        return 0;
+
+
+    public int nodeLevel(BSTNode node){
+        if(node == root) return 0;
+
+        return nodeLevel(node.parent) + 1;
     }
-}
 
 
 class BTNode {
