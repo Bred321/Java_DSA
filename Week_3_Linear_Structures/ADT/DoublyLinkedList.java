@@ -1,12 +1,12 @@
 package Week_3_Linear_Structures.ADT;
 
 public class DoublyLinkedList<T> {
-    static class Node<T>{
+    static class Node<T> {
         T data;
         Node<T> next;
         Node<T> prev;
 
-        public Node(T data){
+        public Node(T data) {
             this.data = data;
             this.next = null;
             this.prev = null;
@@ -17,22 +17,22 @@ public class DoublyLinkedList<T> {
     private Node<T> tail;
     private int size;
 
-    public DoublyLinkedList(){
+    public DoublyLinkedList() {
         head = tail = null;
         size = 0;
     }
 
-    private int size(){
+    public int size() {
         return size;
     }
 
-    private boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    private void addFirst(T item){
+    public void addFirst(T item) {
         Node<T> node = new Node<>(item);
-        if(isEmpty()){
+        if (isEmpty()) {
             head = tail = node;
         } else {
             node.next = head;
@@ -42,19 +42,19 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
-    private T removeFirst(){
+    public T removeFirst() {
         if (isEmpty()) return null;
         T data = head.data;
         head = head.next;
-        if(head != null) head.prev = null;
-        else tail = null;
+        if (head != null) head.prev = null;
+        else tail = null; // List became empty
         size--;
         return data;
     }
 
-    private void addLast(T item){
+    public void addLast(T item) {
         Node<T> node = new Node<>(item);
-        if(isEmpty()){
+        if (isEmpty()) {
             head = tail = node;
         } else {
             node.prev = tail;
@@ -64,54 +64,60 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
-    private T removeLast(){
-        if(isEmpty()) return null;
+    public T removeLast() {
+        if (isEmpty()) return null;
         T data = tail.data;
         tail = tail.prev;
-        if(tail != null) tail.next = null;
-        else head = null;
+        if (tail != null) tail.next = null;
+        else head = null; // List became empty
         size--;
         return data;
     }
 
-    private void printList(){
+    public void printList() {
         Node<T> current = head;
-        while(current != null){
+        while (current != null) {
             System.out.print(current.data + " ");
             current = current.next;
         }
+        System.out.println();
     }
 
-    private Node<T> addBefore(Node<T> w, T data){
-        Node<T> newNode = new Node<>(data);
+    public Node<T> addBefore(Node<T> w, T data) {
         if (w == null) return null;
-        newNode.data = data;
 
+        // Special case: inserting before head
+        if (w == head) {
+            addFirst(data);
+            return head;
+        }
+
+        Node<T> newNode = new Node<>(data);
         newNode.prev = w.prev;
         newNode.next = w;
 
-        newNode.next.prev = newNode;
-        newNode.prev.next = newNode;
+        w.prev.next = newNode;
+        w.prev = newNode;
 
         size++;
         return newNode;
     }
 
-    private Node<T> getNode(int i){
-        Node p = null;
-        if(i < size / 2){
+    public Node<T> getNode(int i) {
+        if (i < 0 || i >= size) throw new IndexOutOfBoundsException("Index: " + i);
+
+        Node<T> p;
+        if (i < size / 2) {
             p = head;
-            for(int j = 0; j < i && p != null; j++){
+            for (int j = 0; j < i; j++) {
                 p = p.next;
             }
         } else {
             p = tail;
-            for(int j = size - 1; j > i && p != null; j--){
+            for (int j = size - 1; j > i; j--) {
                 p = p.prev;
             }
         }
         return p;
     }
-
 }
-
