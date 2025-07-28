@@ -106,4 +106,68 @@ public class CircularSinglyLinkedList<T> {
         if (isEmpty()) return null;
         return tail.next.data;
     }
+
+    public void deleteMiddle() {
+        if (tail == null || tail.next == tail) {
+            tail = null;
+            size = 0;
+            return;
+        }
+
+        Node<T> slow = tail.next;
+        Node<T> fast = tail.next;
+        Node<T> prev = tail;
+
+        while (fast != tail && fast.next != tail) {
+            fast = fast.next.next;
+            prev = slow;
+            slow = slow.next;
+        }
+
+        // Remove slow
+        if (slow == tail) tail = prev;
+        prev.next = slow.next;
+
+        size--;
+    }
+
+    public void removeDuplicates() {
+        if (tail == null) return;
+
+        Node<T> curr = tail.next;
+
+        do {
+            Node<T> runner = curr;
+            while (runner.next != tail.next) {
+                if (curr.data.equals(runner.next.data)) {
+                    // Remove runner.next
+                    if (runner.next == tail) tail = runner;
+                    runner.next = runner.next.next;
+                    size--;
+                } else {
+                    runner = runner.next;
+                }
+            }
+            curr = curr.next;
+        } while (curr != tail.next);
+    }
+
+    public void reverse() {
+        if (tail == null || tail.next == tail) return;
+
+        Node<T> prev = tail;
+        Node<T> curr = tail.next;
+        Node<T> next;
+
+        do {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        } while (curr != tail.next);
+
+        tail = curr; // update tail to the new last node
+    }
 }
+
+

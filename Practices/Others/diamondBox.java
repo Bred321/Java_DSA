@@ -61,9 +61,31 @@ public class diamondBox {
             }
             if (letter == ']'){
                 stack.pop();
+                continue;
             }
         }
         return maxLevel;
+    }
+
+    public int maxDiamonds(){
+        ArrayStack<Integer> stack = new ArrayStack<Integer>();
+        int maxDiamonds = 0;
+        for(int i = 0; i < configuration.length(); i++){
+            char letter = configuration.charAt(i);
+            if (letter == '[' ){
+                stack.push(0);
+                continue;
+            }
+            if (letter == ']'){
+                stack.pop();
+                continue;
+            }
+            int count = stack.peek();
+            stack.pop();
+            stack.push(count + 1);
+            maxDiamonds = Math.max(maxDiamonds, count + 1);
+        }
+        return maxDiamonds;
     }
 
     static class ArrayStack<T> {

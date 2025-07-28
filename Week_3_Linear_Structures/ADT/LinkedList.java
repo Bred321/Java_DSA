@@ -1,4 +1,4 @@
-package ADT;
+package Week_3_Linear_Structures.ADT;
 
 public class LinkedList<T> { 
     // this class is used as a container of data
@@ -130,21 +130,38 @@ public class LinkedList<T> {
     }
 
     public void removeDuplicates() {
-    Node<T> curr = head;
+        Node<T> curr = head;
 
-    while (curr != null) {
-        Node<T> runner = curr;
-        while (runner.next != null) {
-            if (curr.data.equals(runner.next.data)) {
-                runner.next = runner.next.next;
-                size--;
-            } else {
-                runner = runner.next;
+        while (curr != null) {
+            Node<T> runner = curr;
+            while (runner.next != null) {
+                if (curr.data.equals(runner.next.data)) {
+                    runner.next = runner.next.next;
+                    size--;
+                } else {
+                    runner = runner.next;
+                }
             }
+            curr = curr.next;
         }
-        curr = curr.next;
     }
-}
+
+    public void reverse() {
+        if (head == null || head.next == null) return;
+
+        Node<T> prev = null;
+        Node<T> curr = head;
+        Node<T> next = null;
+
+        while (curr != null) {
+            next = curr.next;   // Store next node
+            curr.next = prev;   // Reverse the link
+            prev = curr;        // Move prev forward
+            curr = next;        // Move curr forward
+        }
+
+        head = prev; // Update head to new front
+    }
     /*
     public static void main(String[] args) {
         LinkedList<Integer> LL = new LinkedList<Integer>();

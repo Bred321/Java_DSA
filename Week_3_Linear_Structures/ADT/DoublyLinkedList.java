@@ -120,4 +120,71 @@ public class DoublyLinkedList<T> {
         }
         return p;
     }
+
+    public void deleteMiddle() {
+        if (head == null || head.next == null) {
+            head = null;
+            size = 0;
+            return;
+        }
+
+        Node<T> slow = head;
+        Node<T> fast = head;
+
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        // Remove slow (middle node)
+        if (slow.prev != null)
+            slow.prev.next = slow.next;
+        if (slow.next != null)
+            slow.next.prev = slow.prev;
+
+        // Adjust head if needed
+        if (slow == head)
+            head = slow.next;
+
+        size--;
+    }
+
+    public void removeDuplicates() {
+        Node<T> curr = head;
+
+        while (curr != null) {
+            Node<T> runner = curr.next;
+            while (runner != null) {
+                if (curr.data.equals(runner.data)) {
+                    // Remove runner
+                    if (runner.prev != null)
+                        runner.prev.next = runner.next;
+                    if (runner.next != null)
+                        runner.next.prev = runner.prev;
+                    size--;
+                }
+                runner = runner.next;
+            }
+            curr = curr.next;
+        }
+    }
+
+    public void reverse() {
+        Node<T> curr = head;
+        Node<T> temp = null;
+
+        while (curr != null) {
+            // Swap prev and next
+            temp = curr.prev;
+            curr.prev = curr.next;
+            curr.next = temp;
+            curr = curr.prev; // originally next
+        }
+
+        // Fix head
+        if (temp != null) {
+            head = temp.prev;
+        }
+    }
+
 }
