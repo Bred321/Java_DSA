@@ -1,6 +1,20 @@
 package Practices.Others;
 
 public class BrowserHistory {
+    public static void main(String[] args){
+        BrowserHistory browser = new BrowserHistory("google.com");
+
+        browser.visit("facebook.com");
+        browser.visit("youtube.com");
+
+        System.out.println(browser.back());          // facebook.com
+        System.out.println(browser.back());          // google.com
+        System.out.println(browser.forward());       // facebook.com
+
+        browser.visit("leetcode.com");               // visit new page, youtube is gone
+        System.out.println(browser.forward());       // still leetcode.com
+        System.out.println(browser.getCurrentPage()); // leetcode.com        
+    }
 
     private String homepage;
     private DoublyLinkedList<String> linkedList;
@@ -14,13 +28,31 @@ public class BrowserHistory {
     }
 
     public void visit(String url){
-        if(curr.next != null) linkedList.removeLast(); 
+        // Remove all forward history
+        curr.next = null;
+        linkedList.tail = curr;  // important: truncate tail to current
+
+        // Add new node
         linkedList.addLast(url);
-        curr = curr.next;
+        curr = linkedList.tail;  // update current to point to new tail
     }
 
     public String back(){
-        curr = curr.prev;
+        if (curr != null && curr.prev != null) {
+            curr = curr.prev;
+        }
+        return curr.data;
+    }
+
+    public String forward(){
+        if (curr != null && curr.next != null) {
+            curr = curr.next;
+        }
+        return curr.data;
+        
+    }
+
+    public String getCurrentPage(){
         return curr.data;
     }
 
