@@ -1,29 +1,71 @@
 package Practices.Others;
 
 public class BrowserHistory {
-    static class Node {
-        String url;
-        Node prev, next;
 
-        public Node(String url){
-            this.url = url;
-            prev = next = null;
-        }
-    }
+    private String homepage;
+    private DoublyLinkedList<String> linkedList;
+    private Node<String> curr;
 
-    private int size;
-    private Node head, tail, current;
-
-    public BrowserHistory(String url){
-        size = 0;
-        head = tail = null;
-        visit(url);
+    public BrowserHistory(String homepage){
+        this.homepage = homepage;
+        linkedList = new DoublyLinkedList<String>();
+        linkedList.addLast(this.homepage);
+        curr = linkedList.head;
     }
 
     public void visit(String url){
-        Node node = new Node(url);
-        if (isEmpty()){
-            head = tail = current = node;
+        linkedList.addLast(url);
+        curr = curr.next;
+    }
+
+    public void back(){
+
+    }
+
+   static class DoublyLinkedList<T> {
+    private Node<T> head;
+    private Node<T> tail;
+    private int size;
+
+    public DoublyLinkedList() {
+        head = tail = null;
+        size = 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public void addFirst(T item) {
+        Node<T> node = new Node<>(item);
+        if (isEmpty()) {
+            head = tail = node;
+        } else {
+            node.next = head;
+            head.prev = node;
+            head = node;
+        }
+        size++;
+    }
+
+    public T removeFirst() {
+        if (isEmpty()) return null;
+        T data = head.data;
+        head = head.next;
+        if (head != null) head.prev = null;
+        else tail = null; // List became empty
+        size--;
+        return data;
+    }
+
+    public void addLast(T item) {
+        Node<T> node = new Node<>(item);
+        if (isEmpty()) {
+            head = tail = node;
         } else {
             node.prev = tail;
             tail.next = node;
@@ -32,28 +74,72 @@ public class BrowserHistory {
         size++;
     }
 
-    public String back(){
-        if(current.prev == null) return null;
-        current = current.prev;
-        return current.url;
-    }     // Go one step back, return current page
-
-    public String forward(){
-        if(current.prev == null) return null;
-        current = current.prev;
-        return current.url;
-    }            // Go one step forward, return current page
-
-    public String getCurrentPage(){
-        return current.url;
-    }    // Return the current URL
-    
-    private boolean isEmpty(){
-        return size == 0;
+    public T removeLast() {
+        if (isEmpty()) return null;
+        T data = tail.data;
+        tail = tail.prev;
+        if (tail != null) tail.next = null;
+        else head = null; // List became empty
+        size--;
+        return data;
     }
 
-    private int size(){
-        return size;
+    public void printList() {
+        Node<T> current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
     }
 
+    public Node<T> addBefore(Node<T> w, T data) {
+        if (w == null) return null;
+
+        // Special case: inserting before head
+        if (w == head) {
+            addFirst(data);
+            return head;
+        }
+
+        Node<T> newNode = new Node<>(data);
+        newNode.prev = w.prev;
+        newNode.next = w;
+
+        w.prev.next = newNode;
+        w.prev = newNode;
+
+        size++;
+        return newNode;
+    }
+
+    public Node<T> getNode(int i) {
+        if (i < 0 || i >= size) throw new IndexOutOfBoundsException("Index: " + i);
+
+        Node<T> p;
+        if (i < size / 2) {
+            p = head;
+            for (int j = 0; j < i; j++) {
+                p = p.next;
+            }
+        } else {
+            p = tail;
+            for (int j = size - 1; j > i; j--) {
+                p = p.prev;
+            }
+        }
+        return p;
+    }
+    }
+    static class Node<T> {
+        T data;
+        Node<T> next;
+        Node<T> prev;
+
+        public Node(T data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
 }
