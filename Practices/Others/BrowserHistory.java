@@ -14,12 +14,14 @@ public class BrowserHistory {
     }
 
     public void visit(String url){
+        if(curr.next != null) linkedList.removeLast(); 
         linkedList.addLast(url);
         curr = curr.next;
     }
 
-    public void back(){
-
+    public String back(){
+        curr = curr.prev;
+        return curr.data;
     }
 
    static class DoublyLinkedList<T> {
@@ -130,6 +132,33 @@ public class BrowserHistory {
         }
         return p;
     }
+
+    public void removeNode(Node<T> node) {
+        if (node == null || isEmpty()) return;
+
+        // If node is the only element
+        if (head == tail && head == node) {
+            head = tail = null;
+        }
+        // If node is the head
+        else if (node == head) {
+            head = head.next;
+            head.prev = null;
+        }
+        // If node is the tail
+        else if (node == tail) {
+            tail = tail.prev;
+            tail.next = null;
+        }
+        // If node is in the middle
+        else {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+
+        size--;
+    }
+
     }
     static class Node<T> {
         T data;
