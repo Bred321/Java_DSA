@@ -7,14 +7,20 @@ public class P1 {
         int[] arr = new int[n];
 
         for(int i = 0; i < n; i++){
-            arr[i] = (int)(Math.random() * 100001);
+            arr[i] = (int)(Math.random() * 1001);
         }
 
-        // Sort the array
+        // Built-in sorting framework
         int[] builtinArr = arr;
         Arrays.sort(builtinArr);
+        
+        int[] res = countingSort(arr, n);
 
-        // Counting sort
+
+    }
+
+    static int[] countingSort(int[] arr, int max){
+                // Counting sort
         // 1) Nmax = largest number in the array + 1
         // resultArr.size = n
         // Nmax: the size of the frequency array
@@ -23,9 +29,8 @@ public class P1 {
         // 4) Going from right to left of the input array, decrease first then add
 
         // Step 1: Create the empty arrays
-        int n_max = 100001;
-        int[] freArr = new int[n_max];
-        int[] resultArr = new int[n];
+        int[] freArr = new int[max + 1];
+        int[] resultArr = new int[arr.length];
 
         // Step 2: Create the frequency array
         for(int val: arr){
@@ -33,20 +38,19 @@ public class P1 {
         }
 
         // Step 3: Create the accumulative array
-        for(int i = 0; i < n_max; i++){
+        for(int i = 0; i < max + 1; i++){
             if(i == 0) continue;
             freArr[i] += freArr[i - 1]; 
         }
 
         // Step 4: Create the result array
-        for(int i = n; i >= 0; i--){
+        for(int i = arr.length - 1; i >= 0; i--){
             int val = arr[i];
             freArr[val] -= 1;
             int pos = freArr[val];
-            resultArr[pos] = arr[i];
+            resultArr[pos] = val;
         }
 
-
-
+        return resultArr;
     }
 }
