@@ -3,19 +3,20 @@ import java.util.Random;
 
 public class P1 {
     public static void main(String[] args){
-        int n = 1000000;
-        int[] arr = new int[n];
-
-        for(int i = 0; i < n; i++){
-            arr[i] = (int)(Math.random() * 1001);
-        }
+        int[] arr = generate(100000, 1000000000);
+        int max = Arrays.stream(arr).max().getAsInt(); 
 
         // Built-in sorting framework
         int[] builtinArr = arr;
+        long t1 = System.currentTimeMillis();
         Arrays.sort(builtinArr);
+        long t2 = System.currentTimeMillis();
+        System.out.println("Builtin sort: " + (t2 - t1) + " milliseconds");
         
-        int[] res = countingSort(arr, n);
-
+        long dist1 = System.currentTimeMillis();
+        int[] res = countingSort(arr, max);
+        long dist2 = System.currentTimeMillis();
+        System.out.println("Counting sort: " + (dist2 - dist1) + " milliseconds");
 
     }
 
@@ -53,4 +54,23 @@ public class P1 {
 
         return resultArr;
     }
+
+    static int[] generate(int size, int max){
+        int[] res = new int[size];
+
+        for(int i = 0; i < size; i++){
+            res[i] = (int)(Math.random() * max + 1);
+        }
+
+        return res;
+    }
+
+    static void printArr(int[] arr){
+        for(int val: arr){
+            System.out.print(val);
+            System.out.print(' ');
+        }
+        System.out.println();
+    }
+        
 }
