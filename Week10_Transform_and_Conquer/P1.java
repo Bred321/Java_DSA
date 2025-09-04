@@ -2,7 +2,15 @@ package Week10_Transform_and_Conquer;
 
 public class P1 {
     public static void  main(String[] args){
-        
+        Task[] tasks = new Task[]{
+            new Task(4, 5),
+            new Task(2, 6),
+            new Task(1, 3),
+            new Task(6, 7)
+
+        };
+
+        Task[] result = new Task[Task.length];
     }
 }
 
@@ -17,18 +25,18 @@ class Task{
 }
 
 class MergeSort {
-    public void mergeSort(int arr[]) {
+    public void mergeSort(Task[] arr) {
         if (arr.length > 1) {
         int n = arr.length;
         int middle = n / 2;
 
         // create 2 sub-arrays from arr
-        int[] sub1 = new int[middle];
+        Task[] sub1 = new Task[middle];
         for (int i = 0; i < middle; i++) {
             sub1[i] = arr[i];
         }
 
-        int[] sub2 = new int[n - middle];
+        Task[] sub2 = new Task[n - middle];
         for (int i = middle; i < n; i++) {
             sub2[i - middle] = arr[i];
         }
@@ -40,11 +48,11 @@ class MergeSort {
         }
     }
     // merge two sub-arrays sub1 and sub2 into the array dest
-    public void merge(int[] sub1, int[] sub2, int[] dest) {
+    public void merge(Task[] sub1, Task[] sub2, Task[] dest) {
         int p1 = 0, p2 = 0, pDest = 0; // pointers to 3 arrays
 
         while (p1 < sub1.length && p2 < sub2.length) {
-        if (sub1[p1] <= sub2[p2]) {
+        if (sub1[p1].end <= sub2[p2].end) { // Compare the end times
             dest[pDest] = sub1[p1];
             p1++;
         } else {
