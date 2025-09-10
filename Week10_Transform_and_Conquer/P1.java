@@ -1,4 +1,4 @@
-package Week9_Transform_and_Conquer;
+package Week10_Transform_and_Conquer;
 
 public class P1 {
     public static void  main(String[] args){
@@ -10,7 +10,13 @@ public class P1 {
 
         };
 
-        Task[] result = new Task[Task.length];
+        MergeSort sort = new MergeSort();
+        Task[] result = new Task[tasks.length];
+        sort.mergeSort(result);
+
+        for(Task item: result){
+            System.out.println(item);
+        }
     }
 }
 
