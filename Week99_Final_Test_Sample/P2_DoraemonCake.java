@@ -12,7 +12,10 @@ public class P2_DoraemonCake{
         P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics, A);
         
         // Find at most X topics
+        System.out.println(p2_DoraemonCake.weightByNumber(1));
         System.out.println(p2_DoraemonCake.weightByNumber(2));
+        System.out.println(p2_DoraemonCake.weightByNumber(3));
+        System.out.println(p2_DoraemonCake.largestWeight());
     }
 
     private Topic[] topics;
@@ -23,9 +26,14 @@ public class P2_DoraemonCake{
         this.A = A;
     }
 
-
     public double weightByNumber(int X){
+      Subset subset = new Subset(topics, A, X, false);
+      subset.start();
+      return subset.returnBestWeight();
+    }
 
+    public double largestWeight(){
+      return 0;
     }
 }
 
@@ -41,75 +49,77 @@ class Topic {
 
 class Subset {
   Topic[] items;
-  boolean[] bestSubset;
-  int maxValue;
-  int capacity;
+  boolean[] bestAreaSubset;
+  boolean[] bestWeightSubet;
+  double maxArea;
+  double maxWeight;
+  double capacity;
+  int k;
+  boolean respectArea;
 
-  public Subset(Topic[] i, int c) {
+  public Subset(Topic[] i, double c, int k, boolean respectArea) {
     items = i;
-    bestSubset = new boolean[i.length];
+    bestAreaSubset = bestWeightSubet = new boolean[i.length];
     capacity = c;
-    maxValue = 0;
+    maxArea = 0;
+    this.k = k;
+    this.respectArea = respectArea;
   }
 
-  public void start() {
-    subset(new boolean[items.length], 0);
+  void start() {
+    subset(new boolean[items.length], 0, 0);
   }
 
-  void subset(boolean[] selected, int idx) {
+  void subset(boolean[] selected, int idx, int selectedCount) {
+    if(selectedCount > k) return;
     if (idx == items.length) {
-      process(selected);
+      if(selectedCount == k) process(selected);
       return;
     }
 
     // Not selected
     selected[idx] = false;
-    subset(selected, idx + 1);
+    subset(selected, idx + 1, selectedCount);
 
     // Selected
     selected[idx] = true;
-    subset(selected, idx + 1);
+    subset(selected, idx + 1, selectedCount + 1);
   }
 
   void process(boolean[] selected) {
-    int w = 0, v = 0;
+    double w = 0, s = 0;
     for (int i = 0; i < selected.length; i++) {
       if (selected[i]) {
         w += items[i].W;
-        v += items[i].S;
-        if (w > capacity) {
-          return;
-        }
+        s += items[i].S;
+        if (respectArea && s > capacity) return;
       }
     }
-    if (v > maxValue) {
-      maxValue = v;
-      bestSubset = selected.clone();
+    if (w > maxWeight) {
+      maxWeight = w;
+      bestWeightSubet = selected.clone();
+    }
+    if (s > maxArea) {
+      maxArea = s;
+      bestAreaSubset = selected.clone();
     }
   }
 
   void displayBest() {
     StringBuilder res = new StringBuilder("Best subset:");
-    int totalWeight = 0;
-    for (int i = 0; i < bestSubset.length; i++) {
-      if (bestSubset[i]) {
+    double totalWeight = 0;
+    for (int i = 0; i < bestAreaSubset.length; i++) {
+      if (bestAreaSubset[i]) {
         totalWeight += items[i].S;
-        res.append(String.format(" item(weight: %d, value: %d)", items[i].W, items[i].S));
+        res.append(String.format(" item(weight: %lf, value: %f)", items[i].W, items[i].S));
       }
     }
-    res.append(String.format(" with total weight %d and total value %d", totalWeight, maxValue));
+    res.append(String.format(" with total weight %lf and total value %lf", totalWeight, maxArea));
     System.out.println(res);
   }
 
-//   public static void main(String[] args) {
-//     Topic[] items = new Topic[] {
-//       new Topic(7, 42),
-//       new Topic(3, 12),
-//       new Topic(4, 40),
-//       new Topic(5, 25)
-//     };
-//     Subset knapsack = new Subset(items, 7);
-//     knapsack.start();
-//     knapsack.displayBest();
-//   }
+  double returnBestWeight(){
+    return maxWeight;
+  }
+
 }

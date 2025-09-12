@@ -4,6 +4,7 @@ public class P3 {
   Item[] items;
   boolean[] bestSubset;
   int maxValue;
+  int maxWeight;
   int capacity;
 
   public P3(Item[] i, int c) {

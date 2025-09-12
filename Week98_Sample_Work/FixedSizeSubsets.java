@@ -16,22 +16,23 @@ public class FixedSizeSubsets {
   }
 
   public void start() {
-    subset(new boolean[items.length], 0);
+    subset(new boolean[items.length], 0, 0);
   }
 
-  void subset(boolean[] selected, int idx) {
+  void subset(boolean[] selected, int idx, int selectedCount) {
+    if(selectedCount > k) return;
     if (idx == items.length) {
-      process(selected);
-      return;
+        if(selectedCount == k) process(selected);
+        return;
     }
 
     // Not selected
     selected[idx] = false;
-    subset(selected, idx + 1);
+    subset(selected, idx + 1, selectedCount);
 
     // Selected
     selected[idx] = true;
-    subset(selected, idx + 1);
+    subset(selected, idx + 1, selectedCount + 1);
   }
 
   void process(boolean[] selected) {
@@ -71,7 +72,9 @@ public class FixedSizeSubsets {
       new Item(4, 40),
       new Item(5, 25)
     };
-    P3 knapsack = new P3(items, 7);
+    int k = 2;
+    int capacity = 7;
+    FixedSizeSubsets knapsack = new FixedSizeSubsets(items, capacity, k);
     knapsack.start();
     knapsack.displayBest();
   }

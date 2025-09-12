@@ -1,0 +1,46 @@
+Problem 2
+You have an array of Students sorted by GPAs. All GPAs are unique. You want to create a function
+upperBound(double searchGPA) to find the student whose GPA is smallest and strictly greater
+than the parameter searchGPA. This function returns the index of that student. If there is no
+student matching the condition, this function returns N (N is the number of Students).
+For example, assume the GPAs of the students are = [2.0, 2.5, 2.8, 2.9, 3.1, 3.3]
+Calling upperBound(1.0) return 0 (the student at index 0, whose GPA is 2.0, which is the smallest
+and greater than the search GPA, which is 1.0.
+Calling upperBound(2.9) return 4 (the student at index 4, whose GPA is 3.1, which is the smallest
+and greater than the search GPA, which is 2.9.
+Calling upperBound(3.3) return 6 (no student has a GPA strictly > 3.3).
+Below is the pseudocode for upperBound() function
+int upperBound(Student[] Std, double searchGPA)
+N = length(Std)
+for i = 0 to (N - 1)
+if (Std[i].GPA > searchGPA) return i
+return N
+What is the time complexity of the above algorithm regarding N? Provide your analysis.
+Propose a better algorithm for the above problem. Analyze your proposed algorithm.
+
+
+A) Complexity Analysis
+int upperBound(Student[] Std, double searchGPA) 
+    N = length(Std) // Cost: c1; Occurences: 1
+    for i = 0 to (N - 1) // Cost: c1; Occurences: N
+        if (Std[i].GPA > searchGPA) return i // Cost: c1; Occurences: N
+return N
+=> Conclusion: since the algorithm performs a linear search on the array, the worst case is O(N), happening when the 
+searched value lies at the end 
+
+B) Efficient Algorithm Proposal
+int upperBound(Student[] Std, double searchGPA) 
+    left = 0
+    right = length(Std)
+    answer = length(Std)  // Default if no element is strictly greater
+
+    while left < right:
+        mid = (left + right) / 2
+        if Std[mid].GPA > searchGPA:
+            answer = mid       // Possible answer, but still check left side
+            right = mid
+        else:
+            left = mid + 1
+
+    return answer
+=> Conclusion: the proposal implements a binary search approach, optimizing the binary search to O(logN)

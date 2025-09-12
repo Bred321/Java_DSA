@@ -1,0 +1,28 @@
+1) Time complexity analysis
+maxOne = N 
+maxTwo = N/2
+maxFive = N/5
+ALL = []
+for i = 0 to maxOne - 1 (Cost: c1, Occurences: N)
+  ALL.append(1) (Cost: c2, Occurences: N)
+for i = 0 to maxTwo - 1 (Cost: c2, Occurences: N / 2)
+  ALL.append(2) (Cost: c3, Occurences: N / 2)
+for i = 0 to maxFive - 1 (Cost: c4, Occurences: N / 5)
+  ALL.append(5) (Cost: c5, Occurences: N / 5)
+// the above code creates an array of
+// N number 1, N/2 number 2, and N/5 number 5
+answer = []
+min = MAX_POSITIVE
+for each subset SUB of array ALL  // try all subsets (Cost: c6, Occurences: 2^N)
+  if (sum of elements in SUB == N)  // a valid solution? (Cost: c7, Occurences: N*2^N)
+    if (length of SUB < min)  // better than the current solution? (Cost: c8, Occurences: 2^N)
+      min = length of SUB
+      answer = SUB
+return answer
+
+Time complexity: Since the algorithm relates to creating every subset, the time complexity will be 2^n. However, Since
+it involves the sum of all elements in the subset, whose length could be up to N, the overal time complexity is:
+    O(N*2^N)
+
+
+2) Efficient Algorithm
