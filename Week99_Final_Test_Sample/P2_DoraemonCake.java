@@ -9,6 +9,7 @@ public class P2_DoraemonCake{
             new Topic(5.0, 3.0)
         };  
         double A = 10;
+        Subset subset = new Subset(topics, A, X, false);
         P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics, A);
         
         // Find at most X topics
@@ -27,7 +28,7 @@ public class P2_DoraemonCake{
     }
 
     public double weightByNumber(int X){
-      Subset subset = new Subset(topics, A, X, false);
+      
       subset.start();
       return subset.returnBestWeight();
     }

@@ -26,3 +26,14 @@ it involves the sum of all elements in the subset, whose length could be up to N
 
 
 2) Efficient Algorithm
+// Greedy programming
+// Initialization
+five = two = one = 0
+five = N / 5
+remain = N % 5
+if (remain > 0)
+  two = remain / 2
+  remain = remain % 2
+  if (remain > 0)
+    one = remain / 1
+return (five + two + one)

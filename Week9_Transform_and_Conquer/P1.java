@@ -10,8 +10,28 @@ public class P1 {
 
         };
 
+        // Apply merge sort to the current array
+        MergeSort mergeSort = new MergeSort();
+        mergeSort.mergeSort(tasks);
+
+        // Pick the next task without conflict
         Task[] result = new Task[tasks.length];
-        MergeSort mergeSort = 
+        Task current = tasks[0];
+        int last = 0;
+        for(Task task: tasks){
+            if(task.start >= current.end){
+                current = task;
+                result[last++] = current;
+            }
+        }
+
+        // Print the result
+        for(Task task: result){
+            if(task == null) break;
+            System.out.printf("(%d - %d)\n", task.start, task.end);
+        }
+
+
     }
 }
 
@@ -53,14 +73,14 @@ class MergeSort {
         int p1 = 0, p2 = 0, pDest = 0; // pointers to 3 arrays
 
         while (p1 < sub1.length && p2 < sub2.length) {
-        if (sub1[p1].end <= sub2[p2].end) { // Compare the end times
-            dest[pDest] = sub1[p1];
-            p1++;
-        } else {
-            dest[pDest] = sub2[p2];
-            p2++;
-        }
-        pDest++;
+            if (sub1[p1].end <= sub2[p2].end) { // Compare the end times
+                dest[pDest] = sub1[p1];
+                p1++;
+            } else {
+                dest[pDest] = sub2[p2];
+                p2++;
+            }
+            pDest++;
         }
 
         // copy remaining elements, if any
