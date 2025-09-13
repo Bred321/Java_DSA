@@ -1,4 +1,4 @@
-package Week11_Greedy_Dynamic_Programming;
+package Week10_Greedy_Dynamic_Programming;
 
 public class P1 {
     public static void main(String[] args){

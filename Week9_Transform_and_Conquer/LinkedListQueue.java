@@ -1,4 +1,4 @@
-package W10;
+package Week9_Transform_and_Conquer;
 // Singly Linked List-based implementation of queue
 public class LinkedListQueue<T> {
   // this class is used as a container of data 

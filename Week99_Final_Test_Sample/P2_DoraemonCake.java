@@ -3,13 +3,16 @@ package Week99_Final_Test_Sample;
 public class P2_DoraemonCake {
     public static void main(String[] args){
         Topic[] topics = {
-            new Topic(8.0, 8.0),
+            new Topic(8.0, 7.0),
             new Topic(10.0, 8.0),
             new Topic(5.0,3.0)
         };
 
-        P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics);
+        P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics, 10.0);
+        System.out.println(p2_DoraemonCake.weightByNumber(3));
         System.out.println(p2_DoraemonCake.weightByNumber(2));
+        System.out.println(p2_DoraemonCake.weightByNumber(1));
+        System.out.println(p2_DoraemonCake.largestWeight());
     }   
 
     Topic[] topics;
@@ -40,9 +43,14 @@ public class P2_DoraemonCake {
     }
 
     public double largestWeight(){
-        Subset.subset();
+        boolean[] selected = new boolean[topics.length];
+        Subset.subset(topics.clone(), selected, 0, A);
+        for(int i = 0; i < Subset.bestSet.length; i++){
+            if(Subset.bestSet[i]) System.out.print(i + " ");
+        }
+        System.out.println();
         
-        return 0;
+        return Subset.bestW;
     }
 }
 
@@ -100,7 +108,7 @@ class MergeSort {
         }
 }
 
-class SubSet {
+class Subset {
   static double bestW = 0;
   static boolean[] bestSet = {};
 
