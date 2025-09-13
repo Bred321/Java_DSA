@@ -21,6 +21,13 @@ public class P1 {
             distances[i] = Integer.MAX_VALUE;
             previous[i] = -1;
         }
+        distances[src] = 0;
+    }
+
+    while(true){
+        // Greedy choice: retrieve the shortest-distance node from
+            // unvisited nodes
+        int shortest = Integer.MAX_VALUE;
     }
 }
 
