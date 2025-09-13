@@ -13,8 +13,10 @@ public class P2_DoraemonCake {
     }   
 
     Topic[] topics;
-    public P2_DoraemonCake(Topic[] topics) {
+    double A;
+    public P2_DoraemonCake(Topic[] topics, double A) {
         this.topics = topics;
+        this.A = A;
     }
 
     public double weightByNumber(double X){
@@ -35,6 +37,12 @@ public class P2_DoraemonCake {
 
         return total;
 
+    }
+
+    public double largestWeight(){
+        Subset.subset();
+        
+        return 0;
     }
 }
 
@@ -90,4 +98,40 @@ class MergeSort {
             dest[pDest++] = sub2[p2++];
             }
         }
+}
+
+class SubSet {
+  static double bestW = 0;
+  static boolean[] bestSet = {};
+
+  static void subset(Topic[] input, boolean[] selected, int idx, double A) {
+    if (idx == input.length) {
+      process(input, selected, A);
+      return;
+    }
+
+    // Not selected
+    selected[idx] = false;
+    subset(input, selected, idx + 1, A);
+
+    // Selected
+    selected[idx] = true;
+    subset(input, selected, idx + 1, A);
+  }
+
+  static void process(Topic[] set, boolean[] selected, double A ) {
+    double totalW = 0;
+    double totalS = 0;
+    for(int i = 0; i < set.length; i++){
+        if(selected[i]){
+            totalS += set[i].S;
+            totalW += set[i].W;
+            if(totalS > A) return;
+        }
+    }
+    if(totalW > bestW){
+        bestW = totalW;
+        bestSet = selected.clone();
+    }
+  }
 }
