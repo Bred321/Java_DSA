@@ -1,40 +1,40 @@
 package Week99_Final_Test_Sample;
 
-
-public class P2_DoraemonCake{
+public class P2_DoraemonCake {
     public static void main(String[] args){
         Topic[] topics = {
-            new Topic(8.0, 7.0),
+            new Topic(8.0, 8.0),
             new Topic(10.0, 8.0),
-            new Topic(5.0, 3.0)
-        };  
-        double A = 10;
-        Subset subset = new Subset(topics, A, X, false);
-        P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics, A);
-        
-        // Find at most X topics
-        System.out.println(p2_DoraemonCake.weightByNumber(1));
+            new Topic(5.0,3.0)
+        };
+
+        P2_DoraemonCake p2_DoraemonCake = new P2_DoraemonCake(topics);
         System.out.println(p2_DoraemonCake.weightByNumber(2));
-        System.out.println(p2_DoraemonCake.weightByNumber(3));
-        System.out.println(p2_DoraemonCake.largestWeight());
-    }
+    }   
 
-    private Topic[] topics;
-    private double A;
-
-    public P2_DoraemonCake(Topic[] topics, double A){
+    Topic[] topics;
+    public P2_DoraemonCake(Topic[] topics) {
         this.topics = topics;
-        this.A = A;
     }
 
-    public double weightByNumber(int X){
-      
-      subset.start();
-      return subset.returnBestWeight();
-    }
+    public double weightByNumber(double X){
+        double[] weights = new double[topics.length];
+        double total = 0;
+        int n = weights.length;
+        for(int i = 0; i < weights.length; i++){
+            weights[i] = topics[i].W;
+        }
+        MergeSort mergeSort = new MergeSort();
+        mergeSort.mergeSort(weights);
 
-    public double largestWeight(){
-      return 0;
+        while(X > 0){
+            total += weights[n - 1];
+            n--;
+            X--;
+        }
+
+        return total;
+
     }
 }
 
@@ -48,79 +48,46 @@ class Topic {
     }
 }
 
-class Subset {
-  Topic[] items;
-  boolean[] bestAreaSubset;
-  boolean[] bestWeightSubet;
-  double maxArea;
-  double maxWeight;
-  double capacity;
-  int k;
-  boolean respectArea;
-
-  public Subset(Topic[] i, double c, int k, boolean respectArea) {
-    items = i;
-    bestAreaSubset = bestWeightSubet = new boolean[i.length];
-    capacity = c;
-    maxArea = 0;
-    this.k = k;
-    this.respectArea = respectArea;
-  }
-
-  void start() {
-    subset(new boolean[items.length], 0, 0);
-  }
-
-  void subset(boolean[] selected, int idx, int selectedCount) {
-    if(selectedCount > k) return;
-    if (idx == items.length) {
-      if(selectedCount == k) process(selected);
-      return;
+class MergeSort {
+    public void mergeSort(double arr[]) {
+    if (arr.length > 1) {
+        int n = arr.length;
+        int middle = n / 2;
+        // create 2 sub-arrays from arr
+        double[] sub1 = new double[middle];
+        for (int i = 0; i < middle; i++) {
+        sub1[i] = arr[i];
     }
-
-    // Not selected
-    selected[idx] = false;
-    subset(selected, idx + 1, selectedCount);
-
-    // Selected
-    selected[idx] = true;
-    subset(selected, idx + 1, selectedCount + 1);
-  }
-
-  void process(boolean[] selected) {
-    double w = 0, s = 0;
-    for (int i = 0; i < selected.length; i++) {
-      if (selected[i]) {
-        w += items[i].W;
-        s += items[i].S;
-        if (respectArea && s > capacity) return;
-      }
+    double[] sub2 = new double[n - middle];
+    for (int i = middle; i < n; i++) {
+        sub2[i - middle] = arr[i];
     }
-    if (w > maxWeight) {
-      maxWeight = w;
-      bestWeightSubet = selected.clone();
+    // sort first and second halves
+    mergeSort(sub1);
+    mergeSort(sub2);
+    // merge sub1 and sub2 into the original array
+    merge(sub1, sub2, arr);
     }
-    if (s > maxArea) {
-      maxArea = s;
-      bestAreaSubset = selected.clone();
     }
-  }
-
-  void displayBest() {
-    StringBuilder res = new StringBuilder("Best subset:");
-    double totalWeight = 0;
-    for (int i = 0; i < bestAreaSubset.length; i++) {
-      if (bestAreaSubset[i]) {
-        totalWeight += items[i].S;
-        res.append(String.format(" item(weight: %lf, value: %f)", items[i].W, items[i].S));
-      }
-    }
-    res.append(String.format(" with total weight %lf and total value %lf", totalWeight, maxArea));
-    System.out.println(res);
-  }
-
-  double returnBestWeight(){
-    return maxWeight;
-  }
-
+    // merge two sub-arrays sub1 and sub2 into the array dest
+    public void merge(double[] sub1, double[] sub2, double[] dest) {
+        int p1 = 0, p2 = 0, pDest = 0; // pointers to 3 arrays
+        while (p1 < sub1.length && p2 < sub2.length) {
+            if (sub1[p1] <= sub2[p2]) {
+                dest[pDest] = sub1[p1];
+                p1++;
+            } else {
+                dest[pDest] = sub2[p2];
+                p2++;
+            }
+            pDest++;
+        }
+        // copy remaining elements, if any
+        while (p1 < sub1.length) {
+            dest[pDest++] = sub1[p1++];
+            }
+            while (p2 < sub2.length) {
+            dest[pDest++] = sub2[p2++];
+            }
+        }
 }
