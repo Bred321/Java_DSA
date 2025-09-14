@@ -8,6 +8,7 @@ public class P1 {
             {2, 0, 0, 9},
             {0, 5, 9, 0}
         };
+        System.out.println("Shortest distance: " + shortestPath(distances, 0, distances.length - 1));
     }
 
     static int shortestPath(int[][] nodes, int src, int dest){
@@ -22,12 +23,57 @@ public class P1 {
             previous[i] = -1;
         }
         distances[src] = 0;
-    }
+    
 
-    while(true){
-        // Greedy choice: retrieve the shortest-distance node from
+        while(true){
+            // Greedy choice: retrieve the shortest-distance node from
             // unvisited nodes
-        int shortest = Integer.MAX_VALUE;
+            int shortest = Integer.MAX_VALUE;
+            int shortestNode = -1;
+            for(int i = 0; i < n; i++){
+                if(visited[i]){
+                    continue;
+                }
+                if(shortest > distances[i]) {
+                    shortest = distances[i];
+                    shortestNode = i;
+                }
+            }
+
+            // update the shortest distance through shortest node
+            // to all unvisited nodes
+            for(int i = 0; i < n; i++){
+                if(visited[i]) continue;
+                // shortestNode and i are connected?
+                if(nodes[shortestNode][i] > 0){
+                    // current distance to i > distance reached through shortestNode
+                    if(distances[i] > distances[shortestNode] + nodes[shortestNode][i]){
+                        distances[i] = distances[shortestNode] + nodes[shortestNode][i];
+                        previous[i] = shortestNode;
+                    }
+                }
+            }
+
+            if(shortestNode == dest){
+                // we reach the destination
+                // display the shortest path
+                String path = shortestNode + "";
+                while(previous[shortestNode] != -1){
+                    shortestNode = previous[shortestNode];
+                    path = shortestNode + "->" + path;
+                }
+
+                System.out.println("Shortest path: " + path);
+                return distances[dest];
+            }
+
+            // Even the shortest is INFINITY => stop
+            if(shortest == Integer.MAX_VALUE){
+                return Integer.MAX_VALUE;
+            }
+            // continue the next round
+            visited[shortestNode] = true;
+        }
     }
 }
 

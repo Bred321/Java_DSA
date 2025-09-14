@@ -10,12 +10,14 @@ public class P3_EasyLearning {
                         };
         P3_EasyLearning easyLearning = new P3_EasyLearning(testArr);    
         System.out.println(easyLearning.compare(new int[] {0, 2}, new int[] {0, 1, 2}));
+        System.out.println(easyLearning.bestSequence(testArr, 0, testArr.length - 1));
     }
 
     public P3_EasyLearning(int[][] arr) {
         switchingCost = arr;
     }
 
+    // Time complexity: O(N)
     public int compare(int[] seq1, int[] seq2){
         int cost1 = 0;
         int cost2 = 0;
@@ -46,6 +48,71 @@ public class P3_EasyLearning {
             return -1;
         } else {
             return 0;
+        }
+    }
+
+    public int bestSequence(int[][] nodes, int src, int dest){
+        int n = nodes.length;
+        int[] distances = new int[n]; // distances[i] stores the minimum distance from src to i
+        boolean[] visited = new boolean[n]; // visit state
+        int[] previous = new int[n]; // used to construct the shortest path; previous[i] stores the node that is visited before i
+
+        // Initialization
+        for(int i = 0; i < n; i++){
+            distances[i] = Integer.MAX_VALUE;
+            previous[i] = -1;
+        }
+        distances[src] = 0;
+    
+
+        while(true){
+            // Greedy choice: retrieve the shortest-distance node from
+            // unvisited nodes
+            int shortest = Integer.MAX_VALUE;
+            int shortestNode = -1;
+            for(int i = 0; i < n; i++){
+                if(visited[i]){
+                    continue;
+                }
+                if(shortest > distances[i]) {
+                    shortest = distances[i];
+                    shortestNode = i;
+                }
+            }
+
+            // update the shortest distance through shortest node
+            // to all unvisited nodes
+            for(int i = 0; i < n; i++){
+                if(visited[i]) continue;
+                // shortestNode and i are connected?
+                if(nodes[shortestNode][i] > 0){
+                    // current distance to i > distance reached through shortestNode
+                    if(distances[i] > distances[shortestNode] + nodes[shortestNode][i]){
+                        distances[i] = distances[shortestNode] + nodes[shortestNode][i];
+                        previous[i] = shortestNode;
+                    }
+                }
+            }
+
+            if(shortestNode == dest){
+                // we reach the destination
+                // display the shortest path
+                String path = shortestNode + "";
+                while(previous[shortestNode] != -1){
+                    shortestNode = previous[shortestNode];
+                    path = shortestNode + " " + path;
+                }
+
+                System.out.println(path);
+                return distances[dest];
+            }
+
+            // Even the shortest is INFINITY => stop
+            if(shortest == Integer.MAX_VALUE){
+                return Integer.MAX_VALUE;
+            }
+            // continue the next round
+            visited[shortestNode] = true;
         }
     }
 }
